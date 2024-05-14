@@ -31,7 +31,7 @@ jobs:
 
     - name: Display files
       run: |
-        ls mongo-r5.0.26
+        pwd; sleep 3600
 
     - name: Run the build process with Docker
       uses: addnab/docker-run-action@v3
