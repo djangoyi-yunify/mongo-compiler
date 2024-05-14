@@ -1,0 +1,41 @@
+name: Compiler workflow
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Person to greet'
+        # Default value if no value is explicitly provided
+        default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+        # The data type of the input
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  x64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download file
+      run: |
+        wget https://github.com/mongodb/mongo/archive/refs/tags/r5.0.26.zip -P /r5.0.26.zip
+
+    - name: Extract file
+      run: |
+        unzip /r5.0.26.zip
+
+    - name: Display files
+      run: |
+        ls /mongo-r5.0.26
+
+    - name: Run the build process with Docker
+      uses: addnab/docker-run-action@v3
+      with:
+          image: djangoyi/mongo-compiler:1.0.0-5.0.26
+          options: -v /mongo-r5.0.26:/workspace -w /workspace
+          run: python3 buildscripts/scons.py MONGO_VERSION=5.0.26 CCFLAGS=-march=armv8-a+crc -s install-core --disable-warnings-as-errors
