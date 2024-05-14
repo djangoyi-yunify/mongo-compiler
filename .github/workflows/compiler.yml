@@ -31,7 +31,7 @@ jobs:
 
     - name: Display files
       run: |
-        pwd; echo $GITHUB_WORKSPACE; sleep 3600
+        ls $GITHUB_WORKSPACE; sleep 3600
 
     - name: Run the build process with Docker
       uses: addnab/docker-run-action@v3
