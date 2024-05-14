@@ -28,7 +28,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2 # 使用这个Action可以让你访问仓库内容
+      uses: actions/checkout@v4 # 使用这个Action可以让你访问仓库内容
 
     - name: Setup Docker
       run: |
