@@ -31,11 +31,11 @@ jobs:
 
     - name: Display files
       run: |
-        ls $GITHUB_WORKSPACE; sleep 3600
+        pwd
 
     - name: Run the build process with Docker
       uses: addnab/docker-run-action@v3
       with:
           image: djangoyi/mongo-compiler:1.0.0-5.0.26
-          options: -v mongo-r5.0.26:/workspace -w /workspace
+          options: -v ./mongo-r5.0.26:/workspace -w /workspace
           run: python3 buildscripts/scons.py MONGO_VERSION=5.0.26 CCFLAGS=-march=armv8-a+crc -s install-core --disable-warnings-as-errors
