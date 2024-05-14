@@ -37,5 +37,5 @@ jobs:
       uses: addnab/docker-run-action@v3
       with:
           image: djangoyi/mongo-compiler:1.0.0-5.0.26
-          options: -v $(pwd)/mongo-r5.0.26:/workspace -w /workspace
+          options: -v /home/runner/work/mongo-compiler/mongo-compiler/mongo-r5.0.26:/workspace -w /workspace
           run: python3 buildscripts/scons.py MONGO_VERSION=5.0.26 CCFLAGS=-march=armv8-a+crc -s install-core --disable-warnings-as-errors
