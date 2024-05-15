@@ -33,16 +33,16 @@ jobs:
     - name: Read YAML config file and set environment variables
       id: params
       run: |
-        echo "PARAM_REGISTRY=$(yq '.registry' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_REGISTRY=$(yq '.registry' build.yml)" >> $GITHUB_OUTPUT
-        echo "PARAM_NAMESPACE=$(yq '.namespace' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_NAMESPACE=$(yq '.namespace' build.yml)" >> $GITHUB_OUTPUT
-        echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_OUTPUT
-        echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_OUTPUT
-        echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_REGISTRY=$(yq -r '.registry' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_REGISTRY=$(yq -r '.registry' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_NAMESPACE=$(yq -r '.namespace' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAMESPACE=$(yq -r '.namespace' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_NAME=$(yq -r '.name' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAME=$(yq -r '.name' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_UBUNTU=$(yq -r '.ubuntu' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_UBUNTU=$(yq -r '.ubuntu' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
