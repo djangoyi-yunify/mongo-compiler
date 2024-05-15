@@ -1,3 +1,5 @@
-repo: djangoyi
+registry: docker.io
+namespace: djangoyi
+name: mongo-ubuntu-compiler
 ubuntu: 20.04
 mongo: 5.0.26
