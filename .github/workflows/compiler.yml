@@ -56,11 +56,7 @@ jobs:
         platforms: linux/${{ matrix.platform }}
         tags: output:${{ matrix.platform }}
         build-args:
-          PARAM_REGISTRY=${{ steps.params.outputs.PARAM_REGISTRY }}
-          PARAM_NAMESPACE=${{ steps.params.outputs.PARAM_NAMESPACE }}
-          PARAM_NAME=${{ steps.params.outputs.PARAM_NAME }}
-          PARAM_UBUNTU=${{ steps.params.outputs.PARAM_UBUNTU }}
-          PARAM_MONGO=${{ steps.params.outputs.PARAM_MONGO }}
+          BASE_IMAGE=${{ steps.params.outputs.PARAM_REGISTRY }}/${{ steps.params.outputs.PARAM_NAMESPACE }}/${{ steps.params.outputs.PARAM_NAME }}:${{ steps.params.outputs.PARAM_UBUNTU }}-${{ steps.params.outputs.PARAM_MONGO }}
         outputs: type=docker,dest=/tmp/output-${{ matrix.platform}}.tar
 
     - name: Upload artifact
