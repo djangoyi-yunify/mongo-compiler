@@ -16,6 +16,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
+    strategy:
+      matrix:
+        platform: ["amd64", "arm64"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -34,36 +37,24 @@ jobs:
         echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_ENV
         echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_ENV
         echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_ENV
-    - name: Check envs
-      run: |
-        echo "$PARAM_REGISTRY"
-        echo "$PARAM_UBUNTU"
-        echo "$PARAM_MONGO"
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build image-amd64
+    - name: Build image
       uses: docker/build-push-action@v5
       with:
         context: .
-        platforms: linux/amd64
-        tags: output:amd64
-        outputs: type=docker,dest=/tmp/output-amd64.tar
-
-    - name: Build image-arm64
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        platforms: linux/arm64
-        tags: output:arm64
-        outputs: type=docker,dest=/tmp/output-arm64.tar
+        platforms: linux/${{ matrix.platform }}
+        tags: output:${{ matrix.platform }}
+        outputs: type=docker,dest=/tmp/output-${{ matrix.platform}}.tar
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: myimage
+        name: localimage
         path: /tmp/output-*.tar
 
   check:
@@ -77,7 +68,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-        name: myimage
+        name: localimage
         path: /tmp
     - name: Load image
       run: |
