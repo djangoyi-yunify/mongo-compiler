@@ -29,11 +29,11 @@ jobs:
         pip install yq
     - name: Read YAML config file and set environment variables
       run: |
-        echo "PARAM_REGISTRY=$(yq e '.registry' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_NAMESPACE=$(yq e '.namespace' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_NAME=$(yq e '.name' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_UBUNTU=$(yq e '.ubuntu' build.yml)" >> $GITHUB_ENV
-        echo "PARAM_MONGO=$(yq e '.mongo' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_REGISTRY=$(yq '.registry' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAMESPACE=$(yq '.namespace' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_ENV
     - name: Check envs
       run: |
         echo "$PARAM_REGISTRY"
