@@ -55,7 +55,7 @@ jobs:
         context: .
         platforms: linux/${{ matrix.platform }}
         tags: output:${{ matrix.platform }}
-        build-args:
+        build-args: |
           BASE_IMAGE=${{ steps.params.outputs.PARAM_NAMESPACE }}/${{ steps.params.outputs.PARAM_NAME }}:${{ steps.params.outputs.PARAM_UBUNTU }}-${{ steps.params.outputs.PARAM_MONGO }}
           MONGO_VERION=${{ steps.params.outputs.PARAM_MONGO }}
         outputs: type=docker,dest=/tmp/output-${{ matrix.platform}}.tar
