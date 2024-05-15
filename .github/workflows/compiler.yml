@@ -31,12 +31,18 @@ jobs:
       run: |
         pip install yq
     - name: Read YAML config file and set environment variables
+      id: params
       run: |
         echo "PARAM_REGISTRY=$(yq '.registry' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_REGISTRY=$(yq '.registry' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_NAMESPACE=$(yq '.namespace' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAMESPACE=$(yq '.namespace' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_NAME=$(yq '.name' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_UBUNTU=$(yq '.ubuntu' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_MONGO=$(yq '.mongo' build.yml)" >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -49,6 +55,12 @@ jobs:
         context: .
         platforms: linux/${{ matrix.platform }}
         tags: output:${{ matrix.platform }}
+        build-args:
+          PARAM_REGISTRY=${{ steps.params.outputs.PARAM_REGISTRY }}
+          PARAM_NAMESPACE=${{ steps.params.outputs.PARAM_NAMESPACE }}
+          PARAM_NAME=${{ steps.params.outputs.PARAM_NAME }}
+          PARAM_UBUNTU=${{ steps.params.outputs.PARAM_UBUNTU }}
+          PARAM_MONGO=${{ steps.params.outputs.PARAM_MONGO }}
         outputs: type=docker,dest=/tmp/output-${{ matrix.platform}}.tar
 
     - name: Upload artifact
