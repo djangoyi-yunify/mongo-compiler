@@ -64,3 +64,15 @@ jobs:
         docker load --input /tmp/output-amd64.tar
         docker load --input /tmp/output-arm64.tar
         docker image ls -a
+    - name: Copy release file
+      run: |
+        docker run -dit --name output-amd64 output:amd64 /bin/bash
+        docker run -dit --name output-arm64 -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static output:arm64 /bin/bash
+        sleep 30
+        docker cp output-amd64:/msg /tmp/msg-amd64
+        docker cp output-arm64:/msg /tmp/msg-arm64
+    - name: Show msg
+      run: |
+        cat /tmp/msg-arm64
+        cat /tmp/msg-arm64
+
