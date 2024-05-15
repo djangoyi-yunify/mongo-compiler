@@ -15,27 +15,35 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  x64:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    - name: Download file
-      run: |
-        wget https://github.com/mongodb/mongo/archive/refs/tags/r5.0.26.zip
-
-    - name: Extract file
-      run: |
-        unzip r5.0.26.zip
-
-    - name: Display files
-      run: |
-        pwd
-
-    - name: Run the build process with Docker
-      uses: addnab/docker-run-action@v3
+    - name: Build image-amd64
+      uses: docker/build-push-action@v5
       with:
-          image: djangoyi/mongo-compiler:1.0.0-5.0.26
-          options: -v ${{ github.workspace }}/mongo-r5.0.26:/workspace -w /workspace
-          run: python3 buildscripts/scons.py MONGO_VERSION=5.0.26 CCFLAGS='-s' install-core --disable-warnings-as-errors
+        context: .
+        platforms: linux/amd64
+        tags: output:amd64
+        outputs: type=docker,dest=/tmp/output-amd64.tar
+
+    - name: Build image-arm64
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/arm64
+        tags: output:arm64
+        outputs: type=docker,dest=/tmp/output-arm64.tar
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: myimage
+        path: /tmp/output-*.tar
+
