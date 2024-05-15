@@ -27,6 +27,16 @@ jobs:
     - name: Install yq
       run: |
         pip install yq
+    - name: Read YAML config file and set environment variables
+      run: |
+        echo "PARAM_REPO=$(yq e '.repo' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_UBUNTU=$(yq e '.ubuntu' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_MONGO=$(yq e '.mongo' build.yml)" >> $GITHUB_ENV
+    - name: Check envs
+      run: |
+        echo "$PARAM_REPO"
+        echo "$PARAM_UBUNTU"
+        echo "$PARAM_MONGO"
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
