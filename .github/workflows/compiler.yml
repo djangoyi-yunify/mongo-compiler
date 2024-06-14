@@ -44,6 +44,8 @@ jobs:
         echo "PARAM_UBUNTU=$(yq -r '.ubuntu' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_ENV
         echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_OUTPUT
+        echo "PARAM_CCFLAGS=$(yq -r '.ccflags-${{ matrix.platform }}')" >> $GITHUB_ENV
+        echo "PARAM_CCFLAGS=$(yq -r '.ccflags-${{ matrix.platform }}')" >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -59,6 +61,7 @@ jobs:
         build-args: |
           BASE_IMAGE=${{ steps.params.outputs.PARAM_NAMESPACE }}/${{ steps.params.outputs.PARAM_NAME }}:${{ steps.params.outputs.PARAM_UBUNTU }}-${{ steps.params.outputs.PARAM_MONGO }}
           MONGO_VERION=${{ steps.params.outputs.PARAM_MONGO }}
+          CCFLAGS=${{ steps.params.outputs.PARAM_CCFLAGS }}
         outputs: type=docker,dest=/tmp/output-${{ matrix.platform }}.tar
 
     - name: Upload artifact
@@ -89,7 +92,7 @@ jobs:
         docker load --input /tmp/output-${{ matrix.platform }}.tar
     - name: Copy release file
       run: |
-        docker run --rm output:${{ matrix.platform }} sh -c "uname -a" > /tmp/msg-${{ matrix.platform }}
+        docker run --rm output:${{ matrix.platform }} sh -c "cat /output/xyz" > /tmp/msg-${{ matrix.platform }}
     - name: Show msg
       run: |
         cat /tmp/msg-${{ matrix.platform }}

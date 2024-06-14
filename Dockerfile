@@ -6,7 +6,12 @@ RUN unzip /r${MONGO_VERION}.zip
 
 FROM ${BASE_IMAGE} AS builder
 ARG MONGO_VERION
+ARG CCFLAGS
 COPY --from=downloader /mongo-r${MONGO_VERION} /mongo-r${MONGO_VERION}
-RUN ls -l /mongo-r${MONGO_VERION}
+WORKDIR /mongo-r${MONGO_VERION}
+# RUN python3 buildscripts/scons.py MONGO_VERSION=${MONGO_VERION} ${CCFLAGS} install-core --disable-warnings-as-errors
+RUN echo "msg:${CCFLAGS}" > /mongo-r${MONGO_VERION}/build/install/bin/xyz
 
 FROM alpine:latest
+RUN mkdir /output
+COPY --from=builder /mongo-r${MONGO_VERION}/build/install/bin /output/
