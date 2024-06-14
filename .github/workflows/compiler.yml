@@ -98,6 +98,6 @@ jobs:
         docker run --rm -v /tmp/release/${{ matrix.platform }}:/myrelease output:${{ matrix.platform }} sh -c "cp /output/* /myrelease"
     - name: Show msg
       run: |
-        ls -l /release/${{ matrix.platform }}
+        ls -l /tmp/release/${{ matrix.platform }}
     # - name: Release
     #   uses: actions/r
