@@ -85,9 +85,6 @@ jobs:
     - name: Load image
       run: |
         docker load --input /tmp/output-${{ matrix.platform }}.tar
-    - name: Set up qemu
-      run: |
-        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
     - name: Copy release file
       run: |
         docker run -dit --name output-${{ matrix.platform }} output:${{ matrix.platform }} /bin/bash
