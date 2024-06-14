@@ -95,7 +95,7 @@ jobs:
         docker load --input /tmp/output-${{ matrix.platform }}.tar
     - name: Copy bin files to release folder
       run: |
-        docker run --rm output:${{ matrix.platform }} -v /tmp/release/${{ matrix.platform }}:/myrelease sh -c "cp /output/* /myrelease"
+        docker run --rm -v /tmp/release/${{ matrix.platform }}:/myrelease output:${{ matrix.platform }} sh -c "cp /output/* /myrelease"
     - name: Show msg
       run: |
         ls -l /release/${{ matrix.platform }}
