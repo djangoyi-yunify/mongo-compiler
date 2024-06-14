@@ -89,9 +89,7 @@ jobs:
         docker load --input /tmp/output-${{ matrix.platform }}.tar
     - name: Copy release file
       run: |
-        docker run -dit --name output-${{ matrix.platform }} output:${{ matrix.platform }} /bin/sh
-        sleep 30
-        docker cp output-${{ matrix.platform }}:/usr/lib/os-release /tmp/msg-${{ matrix.platform }}
+        docker run --rm output-${{ matrix.platform }} sh -c "uname -a > /tmp/msg-${{ matrix.platform }}
     - name: Show msg
       run: |
         cat /tmp/msg-${{ matrix.platform }}
