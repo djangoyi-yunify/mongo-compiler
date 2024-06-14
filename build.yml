@@ -3,5 +3,5 @@ namespace: djangoyi
 name: mongo-ubuntu-compiler
 ubuntu: "20.04"
 mongo: "5.0.26"
-ccflags-arm64: "CCFLAGS=-march=armv8-a+crc"
-ccflags-amd64: ""
+ccflags_arm64: "CCFLAGS=-march=armv8-a+crc"
+ccflags_amd64: ""
