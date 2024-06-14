@@ -91,7 +91,7 @@ jobs:
       run: |
         docker run -dit --name output-${{ matrix.platform }} output:${{ matrix.platform }} /bin/bash
         sleep 30
-        docker cp output-${{ matrix.platform }}:/etc/os-release /tmp/msg-${{ matrix.platform }}
+        docker cp output-${{ matrix.platform }}:/usr/lib/os-release /tmp/msg-${{ matrix.platform }}
     - name: Show msg
       run: |
         cat /tmp/msg-${{ matrix.platform }}
