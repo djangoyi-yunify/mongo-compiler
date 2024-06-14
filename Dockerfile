@@ -9,4 +9,4 @@ ARG MONGO_VERION
 COPY --from=downloader /mongo-r${MONGO_VERION} /mongo-r${MONGO_VERION}
 RUN ls -l /mongo-r${MONGO_VERION}
 
-FROM alpine:latest
+FROM ubuntu:latest
