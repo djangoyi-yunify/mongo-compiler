@@ -87,13 +87,17 @@ jobs:
       with:
         name: localimage-${{ matrix.platform }}
         path: /tmp
+    - name: Prepare release folder
+      run: |
+        mkdir /release/${{ matrix.platform }}
     - name: Load image
       run: |
         docker load --input /tmp/output-${{ matrix.platform }}.tar
-    - name: Copy release file
+    - name: Copy bin files to release folder
       run: |
-        docker run --rm output:${{ matrix.platform }} sh -c "cat /output/xyz" > /tmp/msg-${{ matrix.platform }}
+        docker run --rm output:${{ matrix.platform }} -v /release/${{ matrix.platform }}:/myrelease sh -c "cp /output/* /myrelease"
     - name: Show msg
       run: |
-        cat /tmp/msg-${{ matrix.platform }}
-
+        cat /release/${{ matrix.platform }}/*
+    # - name: Release
+    #   uses: actions/r
