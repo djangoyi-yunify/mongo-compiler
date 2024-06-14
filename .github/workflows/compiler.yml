@@ -44,8 +44,8 @@ jobs:
         echo "PARAM_UBUNTU=$(yq -r '.ubuntu' build.yml)" >> $GITHUB_OUTPUT
         echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_ENV
         echo "PARAM_MONGO=$(yq -r '.mongo' build.yml)" >> $GITHUB_OUTPUT
-        echo "PARAM_CCFLAGS=$(yq -r '.ccflags_${{ matrix.platform }}')" >> $GITHUB_ENV
-        echo "PARAM_CCFLAGS=$(yq -r '.ccflags_${{ matrix.platform }}')" >> $GITHUB_OUTPUT
+        echo "PARAM_CCFLAGS=$(yq -r '.ccflags_${{ matrix.platform }}' build.yml)" >> $GITHUB_ENV
+        echo "PARAM_CCFLAGS=$(yq -r '.ccflags_${{ matrix.platform }}' build.yml)" >> $GITHUB_OUTPUT
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
