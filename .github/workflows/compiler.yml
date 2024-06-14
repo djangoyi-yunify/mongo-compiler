@@ -123,3 +123,4 @@ jobs:
       with:
         files: |
           release/*
+        tag_name: abc
