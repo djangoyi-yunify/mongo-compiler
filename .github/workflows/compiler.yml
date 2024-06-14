@@ -18,7 +18,8 @@ jobs:
   build:
     strategy:
       matrix:
-        platform: ["amd64", "arm64"]
+        platform: ["amd64"]
+        # platform: ["amd64", "arm64"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -69,7 +70,8 @@ jobs:
   export:
     strategy:
       matrix:
-        platform: ["amd64", "arm64"]
+        platform: ["amd64"]
+        # platform: ["amd64", "arm64"]
     runs-on: ubuntu-latest
     needs: build
     steps:
