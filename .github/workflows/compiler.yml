@@ -111,7 +111,6 @@ jobs:
       with:
         pattern: build-*
         path: release
-        merge-multiple: true
     - name: Show files
       run: |
         ls -l release
