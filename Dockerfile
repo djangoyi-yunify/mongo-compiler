@@ -13,5 +13,6 @@ WORKDIR /mongo-r${MONGO_VERION}
 RUN mkdir -p /mongo-r${MONGO_VERION}/build/install/bin && echo msg:${CCFLAGS} > /mongo-r${MONGO_VERION}/build/install/bin/xyz
 
 FROM alpine:latest
+ARG MONGO_VERION
 RUN mkdir /output
 COPY --from=builder /mongo-r${MONGO_VERION}/build/install/bin /output/
