@@ -22,6 +22,7 @@ jobs:
         platform: ["amd64"]
         # platform: ["amd64", "arm64"]
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     outputs:
       ubuntu: ${{ steps.params.outputs.PARAM_UBUNTU }}
       mongo: ${{ steps.params.outputs.PARAM_MONGO }}
