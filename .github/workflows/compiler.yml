@@ -118,8 +118,8 @@ jobs:
       uses: actions/checkout@v4
     - name: Remove tag
       run: |
-        git tag -d mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }} -f || :
-        git push origin --delete mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }} -f || :
+        git tag -d mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }} || :
+        git push origin --delete mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }} || :
     - name: Create tag
       run: |
         git tag mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }}
