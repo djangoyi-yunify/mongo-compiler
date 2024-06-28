@@ -133,6 +133,5 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          release/build-amd64/*
-          release/build-arm64/*
+          release/build-*/*
         tag_name: mongo-${{ needs.export.outputs.mongo }}_ubuntu-${{ needs.export.outputs.ubuntu }}
