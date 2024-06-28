@@ -122,6 +122,6 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          release/build-amd64/xyz
-          release/build-amd64/abc
+          release/build-amd64
+          release/build-arm64
         tag_name: abc
