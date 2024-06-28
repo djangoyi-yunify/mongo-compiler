@@ -101,7 +101,7 @@ jobs:
         docker load --input /tmp/output-${{ matrix.platform }}.tar
     - name: Copy bin files to release folder
       run: |
-        docker run --rm -v /tmp/release/${{ matrix.platform }}:/release output:${{ matrix.platform }} sh -c "cp /output/* /release"
+        docker run --rm -v /tmp/release/${{ matrix.platform }}:/release output:${{ matrix.platform }} sh -c "tar -czf /release/bin-${{ matrix.platform }}.tgz /output/*"
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
