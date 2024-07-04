@@ -89,7 +89,9 @@ jobs:
         df -h
 
     - name: Build image
+      id: firstBuild
       uses: docker/build-push-action@v5
+      continue-on-error: true
       with:
         context: .
         platforms: linux/${{ matrix.platform }}
@@ -100,6 +102,18 @@ jobs:
           CCFLAGS=${{ steps.params.outputs.PARAM_CCFLAGS }}
         outputs: type=docker,dest=/tmp/output-${{ matrix.platform }}.tar
 
+    - name: Rebuild image when failed
+      uses: docker/build-push-action@v5
+      if: steps.firstBuild.outcome == 'failure'
+      with:
+        context: .
+        platforms: linux/${{ matrix.platform }}
+        tags: output:${{ matrix.platform }}
+        build-args: |
+          BASE_IMAGE=${{ steps.params.outputs.PARAM_NAMESPACE }}/${{ steps.params.outputs.PARAM_NAME }}:${{ steps.params.outputs.PARAM_UBUNTU }}-${{ steps.params.outputs.PARAM_MONGO }}
+          MONGO_VERION=${{ steps.params.outputs.PARAM_MONGO }}
+          CCFLAGS=${{ steps.params.outputs.PARAM_CCFLAGS }}
+        outputs: type=docker,dest=/tmp/output-${{ matrix.platform }}.tar
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
